@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Name=ConnectionStrings:AuthMsvDBConnection" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models -Context AuthMsvDbContext -Force
