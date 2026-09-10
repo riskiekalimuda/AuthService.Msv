@@ -34,5 +34,12 @@ namespace AuthService.Msv.Controllers
                 return BadRequest(ex.Message);  
             }
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserDto login)
+        {
+            var result = await _authService.Login(login); 
+            return Ok(new { Token=result.Data});
+        }
     }
 }
