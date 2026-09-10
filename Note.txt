@@ -1,1 +1,17 @@
 ﻿Scaffold-DbContext "Name=ConnectionStrings:AuthMsvDBConnection" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models -Context AuthMsvDbContext -Force
+
+
+
+CATATAN
+======================================================
+Dalam arsitektur mikroservis, pendekatan terbaik untuk menangani autentikasi dan otorisasi adalah menggunakan Gateway-Based Authentication dengan JWT (JSON Web Token).
+Artinya, sebuah Auth Service khusus akan bertugas memvalidasi kredensial (username/password) dan menerbitkan token. API Gateway (seperti YARP atau Ocelot) akan memvalidasi token tersebut di pintu masuk, lalu meneruskan informasi user ke mikroservis di belakangnya via HTTP Header. RabbitMQ digunakan untuk komunikasi asinkron (misal: memberi tahu servis lain saat ada user baru terdaftar).
+Berikut adalah panduan langkah demi langkah untuk mengimplementasikannya di Visual Studio 2026 menggunakan C# dan .NET 10 (atau .NET 8/9).
+________________________________________
+1. Struktur Arsitektur Auth
+1.	API Gateway: Pintu masuk utama. Memeriksa apakah token JWT valid.
+2.	Auth Service: Terhubung ke PostgreSQL. Menangani /register dan /login (penerbitan JWT).
+3.	Internal Services (e.g., Order Service): Tidak perlu tahu cara membuat token. Cukup membaca user info dari header yang diteruskan oleh Gateway.
+________________________________________
+
+
